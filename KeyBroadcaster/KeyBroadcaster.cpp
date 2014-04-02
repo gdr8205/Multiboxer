@@ -101,33 +101,6 @@ LRESULT __stdcall HookCallback(int nCode, WPARAM wParam, LPARAM lParam)
 			// lParam is the pointer to the struct containing the data needed, so cast and assign it to kdbStruct.
 			kbdStruct = *((KBDLLHOOKSTRUCT*)lParam);
 			
-			/*if (kbdStruct.vkCode != configs.keysPressed[0] && kbdStruct.vkCode != configs.keysPressed[1] && kbdStruct.vkCode != configs.keysPressed[2] && counterz <3) {
-				cout << counterz << " Key pressed..." << endl;
-				configs.keysPressed[counterz] = kbdStruct.vkCode;
-				counterz++;
-			}*/
-
-			/*if (counterz < 3) {
-				if (kbdStruct.vkCode != configs.keysPressed[0]) {
-					configs.keysPressed[counterz] = kbdStruct.vkCode;
-					cout << counterz << " Key pressed..." << endl;
-					counterz++;
-				}
-				else if (kbdStruct.vkCode != configs.keysPressed[1]) {
-					configs.keysPressed[counterz] = kbdStruct.vkCode;
-					cout << counterz << " Key pressed..." << endl;
-					counterz++;
-				}
-				else if (kbdStruct.vkCode != configs.keysPressed[2]) {
-					configs.keysPressed[counterz] = kbdStruct.vkCode;
-					cout << counterz << " Key pressed..." << endl;
-					counterz++;
-				}
-				
-			}*/
-
-			
-			//if(counterz < 3) {
 			
 				if (configs.keysPressed[0] == 0) {
 					counterz = 0;
@@ -158,37 +131,10 @@ LRESULT __stdcall HookCallback(int nCode, WPARAM wParam, LPARAM lParam)
 					}
 				}
 			}
-			//}
-			//else {
-			//	counterz = 2;
-			//}
-			//else {
-			//	cout << "      PALSE..." << endl;
-			//}
 
-			//pressed = true;
 			return 0;
 		case WM_KEYUP:
-			//if (pressed == true) {
 
-			/*if (kbdStruct.vkCode == configs.keysPressed[0] || kbdStruct.vkCode == configs.keysPressed[1] || kbdStruct.vkCode == configs.keysPressed[2]) {
-				cout << "Hotkey Combo found..." << endl;
-
-				
-					configs.keysPressed[counterz] = { NULL };
-					if (counterz > 0)
-						counterz--;
-				
-			}*/
-
-			
-			//cout << configs.keysPressed[0] << "+" << configs.keysPressed[1] << "+" << configs.keysPressed[2] << " Hotkey found" << endl;
-				//configs.keysPressed[counterz] = { 0 };
-				//counterz--;
-			//cout << "button release detected." << endl;
-			//if (counterz > 2) {
-			//	counterz = 2;
-			//}
 			if (incomming == false) {
 				kbdStruct = *((KBDLLHOOKSTRUCT*)lParam);
 				for (int x = 0; x < counterz; x++) {
