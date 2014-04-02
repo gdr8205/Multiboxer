@@ -30,7 +30,6 @@ void keyActions(HWND hWnd, int action);
 
 void keyCombo();
 
-int wtfballs;
 
 //!====!===!!////////////////////
 HHOOK _hook;
