@@ -1,0 +1,79 @@
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Multiboxer Config File                                                                               //
+//------------------------------------------------------------------------------------------------------//
+// Usable hotkey buttons and actions:       
+//     Control   : LCTRL,  RCTRL,  CTRL       
+//     Alt       : LALT,   RALT
+//     Shift     : LSHIFT, RSHIFT, SHIFT
+//     Tab       : TAB
+//     Spacebar  : SPACE
+//     Arrow keys: UP,     DOWN,   RIGHT,   LEFT
+//==============================================
+// Only config lines that is allowed spaces are window titles names, even means at the end of each line.
+// ATM configs 2,3&4 have no impact on the program
+//
+// Program is set store a maximum of 100 hotkeys
+// All hotkey lines MUST start with $ and have at LEAST 1 "|" character (\ key)
+// Hotkey format:
+//     "$HOTKEY1+HOTKEY2+HOTKEY3|ACTION"
+// Hotkeys will perform thier actions on the screen they are under in this file.
+//
+// MAXIMUM of 5 Windows can be used. Will increase later.
+// 
+// Known Bugs:
+//     - Storing more than 1000 hotkeys will crash the program.
+//                
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+defaultGameWindowTitle=World of Warcraft
+defaultResolution=1680x1050
+RELOAD=RCTRL+RSHIFT+R
+PAUSE=RSHIFT+P
+Master=Lessaid2
+width=1466
+height=940
+xpos=0
+ypos=0
+Slave=Lessaid3
+width=319
+height=204
+xpos=1359
+ypos=77
+$W+SPACE|SPACE
+$SPACE|SPACE
+$DOWN|DOWN
+$S|S
+$1|1
+$2|2
+$3|3
+$4|4
+$5|5
+$6|6
+$7|7
+$8|8
+$9|9
+$0|0
+$-|-
+$=|=
+$LALT+1|1
+Slave=Lessaid4
+width=319
+height=204
+xpos=1359
+ypos=281
+$W+SPACE|SPACE
+$SPACE|SPACE
+$DOWN|DOWN
+$S|S
+$1|1
+$2|2
+$3|3
+$4|4
+$5|5
+$6|6
+$7|7
+$8|8
+$9|9
+$0|0
+$-|-
+$=|=
+$LALT+1|1
