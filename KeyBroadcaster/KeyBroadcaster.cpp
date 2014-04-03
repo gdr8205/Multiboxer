@@ -387,11 +387,6 @@ int main()
 	bool reset = false;
 	
 	//LoadIcon(NULL, IDI_INFORMATION);
-
-	//int button1[6] = { VK_LCONTROL, VK_MENU, VK_LSHIFT, VK_TAB, VK_RCONTROL, VK_RSHIFT };
-	//int button2[6] = { 'Q', 'W', 'A', 'S', 'Z', VK_TAB };
-	//cout << button[0] << endl;
-	//cout << button[1] << endl;
 	
 	//keyMaker();
 	SetHook();
@@ -519,18 +514,16 @@ void keyMaker() {
 	Sleep(100);
 }
 void keyActions(HWND hWnd, int action) {
-
-	//bool active = false;
-	//if (GetFocus() == windows[0].hWnd) {
-	//	active = true;
-	//}
-	//if (active == true) {
-
+	
 	HWND activeWindow = GetForegroundWindow();
 		SetForegroundWindow(windows[0].hWnd);
+	//SetFocus(windows[0].hWnd);
 		ReleaseHook();
 
-		INPUT ip;
+		PostMessage(hWnd, WM_KEYDOWN, action, 0);
+		PostMessage(hWnd, WM_KEYUP, action, 0);
+
+	/*	INPUT ip;
 
 		ip.type = INPUT_KEYBOARD;
 		ip.ki.wScan = 0;
@@ -541,20 +534,18 @@ void keyActions(HWND hWnd, int action) {
 		ip.ki.wVk = action;
 
 		SetForegroundWindow(hWnd);
+		//SetFocus(hWnd);
 		SendInput(1, &ip, sizeof(INPUT));
-
 
 		ip.ki.dwFlags = KEYEVENTF_KEYUP;
 		SendInput(1, &ip, sizeof(INPUT));
 		 
-
-		SetHook();
 		//active = false;
 		SetForegroundWindow(activeWindow);
-	//}
-	//else {
-	//	cout << "\nKeyboard wasnt infocus.\n";
-	//}
+		//SetFocus(activeWindow);
+	*/	
+	SetHook();
+
 }
 
 void borderless(HWND hWnd, int winNum,int move) {
