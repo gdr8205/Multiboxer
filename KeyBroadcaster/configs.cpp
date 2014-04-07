@@ -12,9 +12,6 @@ WOWS windows[maxWows];
 CONFIG configs;
 
 
-
-
-
 int read() {
 
 	string fileName = "config.txt";
@@ -68,12 +65,37 @@ int read() {
 
 			}
 			else if (line.find("defaultResolution=") != string::npos) {
+
+				string height;
+				string width;
+				int spacer = 0;
+
 				string info;
 				for (int x = 18; x < line.length(); x++) {
 
 					info = info + line[x];
 
 				}
+
+				for (int x = 0; x < info.length(); x++) {
+					if (info[x] == 'x') {
+						spacer = x;
+						break;
+					}
+					else {
+						width = width + info[x];
+					}
+				}
+
+				for (int x = spacer+1; x < info.length(); x++) {
+					
+						height = height + info[x];
+					
+				}
+
+				configs.defaultWidth = atoi(width.c_str());
+				configs.defaultHeight = atoi(height.c_str());
+
 				SetConsoleTextAttribute(hstdout, 0x09);
 				cout << "\tDefault res: \t" << info << endl;
 				SetConsoleTextAttribute(hstdout, csbi.wAttributes);
@@ -188,6 +210,7 @@ int read() {
 			}
 			else if (line.find("$") != string::npos && line.find("|") != string::npos) {
 				
+				// Start hotkey code
 
 				string info;
 				int spacer = 0;
@@ -203,6 +226,8 @@ int read() {
 				}
 				configs.hotkey[configs.totalHotkeys] = info;
 
+				//Start action code
+
 				string info2;
 
 				for (int x = spacer+1; x < line.length(); x++) {
@@ -211,95 +236,10 @@ int read() {
 					
 				}
 
-				if (info2.find("RCTRL") != string::npos) {
-					configs.actions[configs.totalHotkeys] = VK_RCONTROL;
-				}
-				else if (info2.find("LCTRL") != string::npos) {
-					configs.actions[configs.totalHotkeys] = VK_LCONTROL;
-				}
-				else if (info2.find("CTRL") != string::npos) {
-					configs.actions[configs.totalHotkeys] = VK_CONTROL;
-				}
-				else if (info2.find("RALT") != string::npos) {
-					configs.actions[configs.totalHotkeys] = VK_RMENU;
-				}
-				else if (info2.find("LALT") != string::npos) {
-					configs.actions[configs.totalHotkeys] = VK_LMENU;
-				}
-				else if (info2.find("ALT") != string::npos) {
-					configs.actions[configs.totalHotkeys] = VK_MENU;
-				}
-				else if (info2.find("RSHIFT") != string::npos) {
-					configs.actions[configs.totalHotkeys] = VK_RSHIFT;
-				}
-				else if (info2.find("LSHIFT") != string::npos) {
-					configs.actions[configs.totalHotkeys] = VK_LSHIFT;
-				}
-				else if (info2.find("SHIFT") != string::npos) {
-					configs.actions[configs.totalHotkeys] = VK_SHIFT;
-				}
-				else if (info2.find("TAB") != string::npos) {
-					configs.actions[configs.totalHotkeys] = VK_TAB;
-				}
-				else if (info2.find("SPACE") != string::npos) {
-					configs.actions[configs.totalHotkeys] = VK_SPACE;
-				}
-				else if (info2.find("UP") != string::npos) {
-					configs.actions[configs.totalHotkeys] = VK_UP;
-				}
-				else if (info2.find("DOWN") != string::npos) {
-					configs.actions[configs.totalHotkeys] = VK_DOWN;
-				}
-				else if (info2.find("RIGHT") != string::npos) {
-					configs.actions[configs.totalHotkeys] = VK_RIGHT;
-				}
-				else if (info2.find("LEFT") != string::npos) {
-					configs.actions[configs.totalHotkeys] = VK_LEFT;
-				}
-				else if (info2.find("-") != string::npos) {
-					configs.actions[configs.totalHotkeys] = VK_OEM_MINUS;
-				}
-				else if (info2.find("=") != string::npos) {
-					configs.actions[configs.totalHotkeys] = VK_OEM_PLUS;
-				}
-				else if (info2.find(",") != string::npos) {
-					configs.actions[configs.totalHotkeys] = VK_OEM_COMMA;
-				}
-				else if (info2.find(".") != string::npos) {
-					configs.actions[configs.totalHotkeys] = VK_OEM_PERIOD;
-				}
-				else if (info2.find(";") != string::npos) {
-					configs.actions[configs.totalHotkeys] = VK_OEM_1;
-				}
-				else if (info2.find("/") != string::npos) {
-					configs.actions[configs.totalHotkeys] = VK_OEM_2;
-				}
-				else if (info2.find("`") != string::npos) {
-					configs.actions[configs.totalHotkeys] = VK_OEM_3;
-				}
-				else if (info2.find("[") != string::npos) {
-					configs.actions[configs.totalHotkeys] = VK_OEM_4;
-				}
-				else if (info2.find("]") != string::npos) {
-					configs.actions[configs.totalHotkeys] = VK_OEM_6;
-				}
-				else if (info2.find("'") != string::npos) {
-					configs.actions[configs.totalHotkeys] = VK_OEM_7;
-				}
-				else {
-
-					char info3;
-					//for (int x = 0; x < keyString.length(); x++) {
-
-					info3 = info2[0];
 
 
-					configs.actions[configs.totalHotkeys] = info3;
-					//}
-					//keys[counter] = info[0];
-				}
-
-				
+				//configs.actions[configs.totalHotkeys] = convertStringToAction(info2);
+				actionMaker(info2);
 				//configs.actions[configs.totalHotkeys] = line[line.length() - 1];
 				configs.screen[configs.totalHotkeys] = screenCounter;
 
@@ -317,6 +257,129 @@ int read() {
 		
 	}
 	return configs.windowCounter = screenCounter;
+}
+
+void actionMaker(string info) {
+	if (info.find("+") != string::npos) {
+		string one, two;
+		int spacer = 0;
+
+		for (int x = 0; x < info.length(); x++) {
+			if (info[x] == '+') {
+				spacer = x;
+				break;
+			}
+			else {
+				one = one + info[x];
+			}
+		}
+
+		for (int x = spacer+1; x < info.length(); x++) {
+			if (info[x] == '+') {
+				spacer = x;
+				break;
+			}
+			else {
+				two = two + info[x];
+			}
+		}
+
+		configs.actions[configs.totalHotkeys][0] = convertStringToAction(one);
+		configs.actions[configs.totalHotkeys][1] = convertStringToAction(two);
+
+	}
+	else {
+		configs.actions[configs.totalHotkeys][0] = NULL;
+		configs.actions[configs.totalHotkeys][1] = convertStringToAction(info);
+	}
+}
+
+int convertStringToAction(string info) {
+	
+	int num = 0;
+
+	if (info.find("RCTRL") != string::npos) {
+		num = VK_RCONTROL;
+	}
+	else if (info.find("LCTRL") != string::npos) {
+		num = VK_LCONTROL;
+	}
+	else if (info.find("CTRL") != string::npos) {
+		num = VK_CONTROL;
+	}
+	else if (info.find("RALT") != string::npos) {
+		num = VK_RMENU;
+	}
+	else if (info.find("LALT") != string::npos) {
+		num = VK_LMENU;
+	}
+	else if (info.find("ALT") != string::npos) {
+		num = VK_MENU;
+	}
+	else if (info.find("RSHIFT") != string::npos) {
+		num = VK_RSHIFT;
+	}
+	else if (info.find("LSHIFT") != string::npos) {
+		num = VK_LSHIFT;
+	}
+	else if (info.find("SHIFT") != string::npos) {
+		num = VK_SHIFT;
+	}
+	else if (info.find("TAB") != string::npos) {
+		num = VK_TAB;
+	}
+	else if (info.find("SPACE") != string::npos) {
+		num = VK_SPACE;
+	}
+	else if (info.find("UP") != string::npos) {
+		num = VK_UP;
+	}
+	else if (info.find("DOWN") != string::npos) {
+		num = VK_DOWN;
+	}
+	else if (info.find("RIGHT") != string::npos) {
+		num = VK_RIGHT;
+	}
+	else if (info.find("LEFT") != string::npos) {
+		num = VK_LEFT;
+	}
+	else if (info.find("-") != string::npos) {
+		num = VK_OEM_MINUS;
+	}
+	else if (info.find("=") != string::npos) {
+		num = VK_OEM_PLUS;
+	}
+	else if (info.find(",") != string::npos) {
+		num = VK_OEM_COMMA;
+	}
+	else if (info.find(".") != string::npos) {
+		num = VK_OEM_PERIOD;
+	}
+	else if (info.find(";") != string::npos) {
+		num = VK_OEM_1;
+	}
+	else if (info.find("/") != string::npos) {
+		num = VK_OEM_2;
+	}
+	else if (info.find("`") != string::npos) {
+		num = VK_OEM_3;
+	}
+	else if (info.find("[") != string::npos) {
+		num = VK_OEM_4;
+	}
+	else if (info.find("]") != string::npos) {
+		num = VK_OEM_6;
+	}
+	else if (info.find("'") != string::npos) {
+		num = VK_OEM_7;
+	}
+	else {
+
+		num = info[0];
+
+	}
+
+	return num;
 }
 
 void addBorders(HWND hWnd, int winNum, int move) {

@@ -11,6 +11,8 @@ int read();
 
 int renameWindows(int configdInstancesNumber, int redo);
 void getWindowInfo(int winNumber);
+void actionMaker(string info);
+int convertStringToAction(string info);
 
 struct WOWS {
 	wstring title;
@@ -26,11 +28,13 @@ struct CONFIG {
 	wstring defaultGameWindowTitle;
 	string hotkey[1000];
 	int keys[1000][3];
-	int actions[1000];
+	int actions[1000][2];
 	int screen[1000];
 	int totalHotkeys = 0;
 	int keysPressed[3];
 	int windowCounter;
+	int defaultWidth = 0;
+	int defaultHeight = 0;
 
 };
 

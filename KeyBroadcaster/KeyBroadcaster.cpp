@@ -47,6 +47,9 @@ LRESULT __stdcall HookCallback(int nCode, WPARAM wParam, LPARAM lParam)
 		{
 			// the action is valid: HC_ACTION.
 		case WM_SYSKEYDOWN:
+			if (kbdStruct.vkCode == VK_SHIFT) {
+				cout << "FUCKER IS WORKING" << endl;
+			}
 			//DefWindowProc(windows[0].hWnd, WM_SYSKEYUP, wParam, lParam);
 			kbdStruct = *((KBDLLHOOKSTRUCT*)lParam);
 			//cout << "FUCKSYSKEY DOWN" << endl;
@@ -101,6 +104,9 @@ LRESULT __stdcall HookCallback(int nCode, WPARAM wParam, LPARAM lParam)
 			// lParam is the pointer to the struct containing the data needed, so cast and assign it to kdbStruct.
 			kbdStruct = *((KBDLLHOOKSTRUCT*)lParam);
 			
+			if (kbdStruct.vkCode == VK_SHIFT) {
+				cout << "FUCKER IS WORKING" << endl;
+			}
 			
 				if (configs.keysPressed[0] == 0) {
 					counterz = 0;
@@ -134,7 +140,7 @@ LRESULT __stdcall HookCallback(int nCode, WPARAM wParam, LPARAM lParam)
 
 			return 0;
 		case WM_KEYUP:
-
+			//cout << "FOOK ME SOOOO" << endl;
 			if (incomming == false) {
 				kbdStruct = *((KBDLLHOOKSTRUCT*)lParam);
 				for (int x = 0; x < counterz; x++) {
@@ -287,13 +293,15 @@ void keyCombo() {
 						wcout << "\n" << keyCombo << " pressed on " << windows[configs.screen[x]].title;
 						//clickedWindows[clickCounter] = config.screen[x];
 						//clickCounter++;
-						keyActions(windows[configs.screen[x]].hWnd, configs.actions[x]);
+						//keyActions(windows[configs.screen[x]].hWnd, configs.actions[x]);
+						keyActions(windows[configs.screen[x]].hWnd, x);
 					}
 					else {
 						wcout << ", " << windows[configs.screen[x]].title;
 						//clickedWindows[clickCounter] = config.screen[x];
 						//clickCounter++;
-						keyActions(windows[configs.screen[x]].hWnd, configs.actions[x]);
+						//keyActions(windows[configs.screen[x]].hWnd, configs.actions[x]);
+						keyActions(windows[configs.screen[x]].hWnd, x);
 
 					}
 
@@ -311,11 +319,13 @@ void keyCombo() {
 						
 							if (pressed == false) {
 								wcout << "\n" << keyCombo << " pressed on " << windows[configs.screen[x]].title;
-								keyActions(windows[configs.screen[x]].hWnd, configs.actions[x]);
+								//keyActions(windows[configs.screen[x]].hWnd, configs.actions[x]);
+								keyActions(windows[configs.screen[x]].hWnd, x);
 							}
 							else {
 								wcout << ", " << windows[configs.screen[x]].title;
-								keyActions(windows[configs.screen[x]].hWnd, configs.actions[x]);
+								//keyActions(windows[configs.screen[x]].hWnd, configs.actions[x]);
+								keyActions(windows[configs.screen[x]].hWnd, x);
 
 							}
 
@@ -332,11 +342,13 @@ void keyCombo() {
 
 						if (pressed == false) {
 							wcout << "\n" << keyCombo << " pressed on " << windows[configs.screen[x]].title;
-							keyActions(windows[configs.screen[x]].hWnd, configs.actions[x]);
+							//keyActions(windows[configs.screen[x]].hWnd, configs.actions[x]);
+							keyActions(windows[configs.screen[x]].hWnd, x);
 						}
 						else {
 							wcout << ", " << windows[configs.screen[x]].title;
-							keyActions(windows[configs.screen[x]].hWnd, configs.actions[x]);
+							//keyActions(windows[configs.screen[x]].hWnd, configs.actions[x]);
+							keyActions(windows[configs.screen[x]].hWnd, x);
 
 						}
 
@@ -420,91 +432,9 @@ void keyMaker() {
 		configs.keys[x][2] = NULL;
 
 		while (getline(stream, keyString, '+')) {
-			if (keyString.find("RCTRL") != string::npos) {
-				configs.keys[x][counter] = VK_RCONTROL;
-			}
-			else if (keyString.find("LCTRL") != string::npos) {
-				configs.keys[x][counter] = VK_LCONTROL;
-			}
-			else if (keyString.find("CTRL") != string::npos) {
-				configs.keys[x][counter] = VK_CONTROL;
-			}
-			else if (keyString.find("RALT") != string::npos) {
-				configs.keys[x][counter] = VK_RMENU;
-			}
-			else if (keyString.find("LALT") != string::npos) {
-				configs.keys[x][counter] = VK_LMENU;
-			}
-			else if (keyString.find("ALT") != string::npos) {
-				configs.keys[x][counter] = VK_MENU;
-			}
-			else if (keyString.find("RSHIFT") != string::npos) {
-				configs.keys[x][counter] = VK_RSHIFT;
-			}
-			else if (keyString.find("LSHIFT") != string::npos) {
-				configs.keys[x][counter] = VK_LSHIFT;
-			}
-			else if (keyString.find("SHIFT") != string::npos) {
-				configs.keys[x][counter] = VK_SHIFT;
-			}
-			else if (keyString.find("TAB") != string::npos) {
-				configs.keys[x][counter] = VK_TAB;
-			}
-			else if (keyString.find("SPACE") != string::npos) {
-				configs.keys[x][counter] = VK_SPACE;
-			}
-			else if (keyString.find("UP") != string::npos) {
-				configs.keys[x][counter] = VK_UP;
-			}
-			else if (keyString.find("DOWN") != string::npos) {
-				configs.keys[x][counter] = VK_DOWN;
-			}
-			else if (keyString.find("RIGHT") != string::npos) {
-				configs.keys[x][counter] = VK_RIGHT;
-			}
-			else if (keyString.find("LEFT") != string::npos) {
-				configs.keys[x][counter] = VK_LEFT;
-			}
-			else if (keyString.find("-") != string::npos) {
-				configs.keys[x][counter] = VK_OEM_MINUS;
-			}
-			else if (keyString.find("=") != string::npos) {
-				configs.keys[x][counter] = VK_OEM_PLUS;
-			}
-			else if (keyString.find(",") != string::npos) {
-				configs.keys[x][counter] = VK_OEM_COMMA;
-			}
-			else if (keyString.find(".") != string::npos) {
-				configs.keys[x][counter] = VK_OEM_PERIOD;
-			}
-			else if (keyString.find(";") != string::npos) {
-				configs.keys[x][counter] = VK_OEM_1;
-			}
-			else if (keyString.find("/") != string::npos) {
-				configs.keys[x][counter] = VK_OEM_2;
-			}
-			else if (keyString.find("`") != string::npos) {
-				configs.keys[x][counter] = VK_OEM_3;
-			}
-			else if (keyString.find("[") != string::npos) {
-				configs.keys[x][counter] = VK_OEM_4;
-			}
-			else if (keyString.find("]") != string::npos) {
-				configs.keys[x][counter] = VK_OEM_6;
-			}
-			else if (keyString.find("'") != string::npos) {
-				configs.keys[x][counter] = VK_OEM_7;
-			}
-			else {
 
-				char info[1] = {};
-				//for (int x = 0; x < keyString.length(); x++) {
+			configs.keys[x][counter] = convertStringToAction(keyString);
 
-				info[0] = keyString[0];
-
-				//}
-				configs.keys[x][counter] = info[0];
-			}
 			counter++;
 		}
 
@@ -519,9 +449,19 @@ void keyActions(HWND hWnd, int action) {
 		SetForegroundWindow(windows[0].hWnd);
 	//SetFocus(windows[0].hWnd);
 		ReleaseHook();
+		
 
-		PostMessage(hWnd, WM_KEYDOWN, action, 0);
-		PostMessage(hWnd, WM_KEYUP, action, 0);
+		if (configs.actions[action][0] != NULL) {
+			PostMessage(hWnd, WM_KEYDOWN, configs.actions[action][0], 0) && PostMessage(hWnd, WM_KEYDOWN, configs.actions[action][1], 0);
+			//PostMessage(hWnd, WM_KEYDOWN, configs.actions[action][1], 0);
+
+			PostMessage(hWnd, WM_KEYUP, configs.actions[action][1], 0) && PostMessage(hWnd, WM_KEYUP, configs.actions[action][0], 0);
+			//PostMessage(hWnd, WM_KEYUP, configs.actions[action][0], 0);
+		}
+		else {
+			PostMessage(hWnd, WM_KEYDOWN, configs.actions[action][1], 0);
+			PostMessage(hWnd, WM_KEYUP, configs.actions[action][1], 0);
+		}
 
 	/*	INPUT ip;
 

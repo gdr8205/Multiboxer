@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------------------------------//
 // Usable hotkey buttons and actions:       
 //     Control   : LCTRL,  RCTRL,  CTRL       
-//     Alt       : LALT,   RALT
+//     Alt       : LALT,   RALT,   ALT
 //     Shift     : LSHIFT, RSHIFT, SHIFT
 //     Tab       : TAB
 //     Spacebar  : SPACE
@@ -15,7 +15,7 @@
 // Program is set store a maximum of 100 hotkeys
 // All hotkey lines MUST start with $ and have at LEAST 1 "|" character (\ key)
 // Hotkey format:
-//     "$HOTKEY1+HOTKEY2+HOTKEY3|ACTION"
+//     "$HOTKEY1+HOTKEY2+HOTKEY3|ACTION1+ACTION2"
 // Hotkeys will perform thier actions on the screen they are under in this file.
 //
 // MAXIMUM of 5 Windows can be used. Will increase later.
@@ -38,6 +38,10 @@ width=319
 height=204
 xpos=1359
 ypos=77
+$ALT|1
+$CTRL|1
+$SHIFT|1
+$SHIFT+Z|SHIFT+Z
 $W+SPACE|SPACE
 $SPACE|SPACE
 $DOWN|DOWN
@@ -54,12 +58,13 @@ $9|9
 $0|0
 $-|-
 $=|=
-$LALT+1|1
+$ALT|ALT
 Slave=Lessaid4
 width=319
 height=204
 xpos=1359
 ypos=281
+$SHIFT+Z|SHIFT+Z
 $W+SPACE|SPACE
 $SPACE|SPACE
 $DOWN|DOWN
@@ -76,4 +81,4 @@ $9|9
 $0|0
 $-|-
 $=|=
-$LALT+1|1
+$ALT|ALT
