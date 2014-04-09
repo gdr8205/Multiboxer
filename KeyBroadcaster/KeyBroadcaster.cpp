@@ -205,13 +205,13 @@ void resizeWindowCycle(){
 		}
 	}
 	if (windows[configs.currentWindowMaxed].hWnd != activeWindow) {
-		if (configs.currentWindowMaxed == NULL) {
-			cout << "0" << endl;
+		if (configs.currentWindowMaxed == -1) {
+			//cout << "0" << endl;
 			SetWindowPos(activeWindow, 0, 0, 0, configs.defaultWidth, configs.defaultHeight, SWP_NOZORDER | SWP_NOACTIVATE);
 			configs.currentWindowMaxed = winNum;
 		}
 		else {
-			cout << "1" << endl;
+			//cout << "1" << endl;
 			SetWindowPos(windows[configs.currentWindowMaxed].hWnd, 0, windows[configs.currentWindowMaxed].xpos, windows[configs.currentWindowMaxed].ypos, windows[configs.currentWindowMaxed].width, windows[configs.currentWindowMaxed].height, SWP_NOZORDER | SWP_NOACTIVATE);
 
 			SetWindowPos(activeWindow, 0, 0, 0, configs.defaultWidth, configs.defaultHeight, SWP_NOZORDER | SWP_NOACTIVATE);
@@ -220,9 +220,9 @@ void resizeWindowCycle(){
 		}
 	}
 	else {
-		cout << "2" << endl;
+		//cout << "2" << endl;
 		SetWindowPos(windows[configs.currentWindowMaxed].hWnd, 0, windows[configs.currentWindowMaxed].xpos, windows[configs.currentWindowMaxed].ypos, windows[configs.currentWindowMaxed].width, windows[configs.currentWindowMaxed].height, SWP_NOZORDER | SWP_NOACTIVATE);
-		configs.currentWindowMaxed = NULL;
+		configs.currentWindowMaxed = -1;
 	}
 }
 

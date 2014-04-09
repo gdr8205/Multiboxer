@@ -36,7 +36,7 @@ struct CONFIG {
 	int defaultWidth = 0;
 	int defaultHeight = 0;
 
-	int currentWindowMaxed = NULL;
+	int currentWindowMaxed = -1;
 
 };
 
