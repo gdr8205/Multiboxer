@@ -36,6 +36,8 @@ struct CONFIG {
 	int defaultWidth = 0;
 	int defaultHeight = 0;
 
+	int currentWindowMaxed = NULL;
+
 };
 
 extern struct WOWS windows[];

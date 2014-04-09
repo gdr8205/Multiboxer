@@ -191,6 +191,41 @@ int suspendCounter = 0;
 
 int lastKeyCombo[3] = {NULL,NULL,NULL};
 
+void resizeWindowCycle(){
+
+	int winNum;
+
+	HWND activeWindow = GetForegroundWindow();
+
+	for (int x = 0; x < configs.windowCounter; x++) {
+		if (activeWindow == windows[x].hWnd) {
+			winNum = x;
+			//cout << "Found Winder..." << endl;
+			break;
+		}
+	}
+	if (windows[configs.currentWindowMaxed].hWnd != activeWindow) {
+		if (configs.currentWindowMaxed == NULL) {
+			cout << "0" << endl;
+			SetWindowPos(activeWindow, 0, 0, 0, configs.defaultWidth, configs.defaultHeight, SWP_NOZORDER | SWP_NOACTIVATE);
+			configs.currentWindowMaxed = winNum;
+		}
+		else {
+			cout << "1" << endl;
+			SetWindowPos(windows[configs.currentWindowMaxed].hWnd, 0, windows[configs.currentWindowMaxed].xpos, windows[configs.currentWindowMaxed].ypos, windows[configs.currentWindowMaxed].width, windows[configs.currentWindowMaxed].height, SWP_NOZORDER | SWP_NOACTIVATE);
+
+			SetWindowPos(activeWindow, 0, 0, 0, configs.defaultWidth, configs.defaultHeight, SWP_NOZORDER | SWP_NOACTIVATE);
+
+			configs.currentWindowMaxed = winNum;
+		}
+	}
+	else {
+		cout << "2" << endl;
+		SetWindowPos(windows[configs.currentWindowMaxed].hWnd, 0, windows[configs.currentWindowMaxed].xpos, windows[configs.currentWindowMaxed].ypos, windows[configs.currentWindowMaxed].width, windows[configs.currentWindowMaxed].height, SWP_NOZORDER | SWP_NOACTIVATE);
+		configs.currentWindowMaxed = NULL;
+	}
+}
+
 void keyCombo() {
 	//cout << "hotkey" << endl;
 	
@@ -275,6 +310,9 @@ void keyCombo() {
 			cout << "\nBroadcasting Resumed!\n";
 			paused = false;
 		}
+	}
+	else if (configs.keysPressed[0] == VK_F1 && active == true) {
+		resizeWindowCycle();
 	}
 
 	if (paused == false && active == true) {
@@ -502,11 +540,11 @@ void borderless(HWND hWnd, int winNum,int move) {
 	
 		
 		if (move == 1) {
-			SetWindowPos(hWnd, 0, windows[winNum].xpos, windows[winNum].ypos, windows[winNum].width, resizeWindow(1680, 1050, windows[winNum].width), /*SWP_NOZORDER | SWP_NOACTIVATE*/ 0);
+			SetWindowPos(hWnd, 0, windows[winNum].xpos, windows[winNum].ypos, windows[winNum].width, resizeWindow(configs.defaultWidth, configs.defaultHeight, windows[winNum].width), /*SWP_NOZORDER | SWP_NOACTIVATE*/ 0);
 			ShowWindow(hWnd, SW_RESTORE);
 		}
 		else
-			SetWindowPos(hWnd, 0, windows[winNum].xpos, windows[winNum].ypos, windows[winNum].width, resizeWindow(1680, 1050, windows[winNum].width), /*SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE*/ 0);
+			SetWindowPos(hWnd, 0, windows[winNum].xpos, windows[winNum].ypos, windows[winNum].width, resizeWindow(configs.defaultWidth, configs.defaultHeight, windows[winNum].width), /*SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE*/ 0);
 		//1680x1050
 	}
 	else {
