@@ -683,6 +683,8 @@ void resetAll(int init = 0) {
 	cout << "Broadcasting Started..." << endl;
 	cout << "Press RSHIFT+P at anytime to Pause/Resume broadcasting." << endl;
 	cout << "Press RCTRL+RSHIFT+R at anytime to reload configs." << endl;
+	cout << "Press RCTRL+RSHIFT+B to Add/Remove borders." << endl;
+	cout << "Press F6 to switch between full screen and regular size." << endl;
 	cout << "-------------------------------------------------------\n";
 	SetForegroundWindow(windows[0].hWnd);
 	keyMaker();

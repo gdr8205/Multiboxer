@@ -405,7 +405,7 @@ void addBorders(HWND hWnd, int winNum, int move) {
 		//1680x1050
 	}
 	else {
-		wcout << "Couldn't find window: xyz." << endl;
+		wcout << "Couldn't find window: " << windows[winNum].title << endl;
 	}
 
 }
