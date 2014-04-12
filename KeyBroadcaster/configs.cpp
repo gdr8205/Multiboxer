@@ -415,7 +415,7 @@ int renameWindows(int configdInstancesNumber, int redo) {
 	int instance_counter = 0;
 	HWND hWnd, hWnd2;
 
-	cout << "Renaming " << configdInstancesNumber + 1 << " WoWs as you load them..." << endl;
+	wcout << "Renaming " << configdInstancesNumber + 1 << " " << configs.defaultGameWindowTitle << " windows as you load them..." << endl;
 
 	if (redo == 0) {
 		// rename windows during startup

@@ -620,7 +620,7 @@ void resetAll(int init = 0) {
 	running = true;
 
 	cout << "-------------------------------------------------------------------------------" << endl;
-	cout << "WoW windows under control: " << endl;
+	wcout << configs.defaultGameWindowTitle << " windows under control: " << endl;
 	for (int x = 0; x != configs.windowCounter; x++) {
 		wcout << windows[x].title << endl;
 	}
