@@ -668,7 +668,7 @@ void resetAll(int init = 0) {
 		//Sleep(100);
 
 		//cout << "Remove window borders? y/n" << endl;
-		HANDLE hstdin = GetStdHandle(STD_INPUT_HANDLE);
+		//HANDLE hstdin = GetStdHandle(STD_INPUT_HANDLE);
 		//FlushConsoleInputBuffer(hstdin);
 		//cin >> check;
 		/*

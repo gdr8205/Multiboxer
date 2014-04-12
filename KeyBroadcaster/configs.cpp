@@ -39,7 +39,10 @@ void profiles() {
 			}
 		}
 		cout << "Select Profile to use: ";
-
+		
+		HANDLE hstdin = GetStdHandle(STD_INPUT_HANDLE);
+		FlushConsoleInputBuffer(hstdin);
+		
 		cin >> chosenOne;
 
 		configs.profile = Profiles[chosenOne - 1];

@@ -17,8 +17,6 @@ void addBorders(HWND, int, int);
 
 void profiles();
 
-
-
 struct WOWS {
 	wstring title;
 	HWND hWnd;
