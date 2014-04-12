@@ -433,7 +433,9 @@ int renameWindows(int configdInstancesNumber, int redo) {
 			}
 			else if (hWnd) {
 				//getWindowInfo(instance_counter);
-				addBorders(hWnd, instance_counter, 1);
+				
+				//addBorders(hWnd, instance_counter, 1);     //    <---------------------------------------------------
+				
 				windows[instance_counter].hWnd = hWnd;
 				wcout << "Found pre-existing renamed wow window: " << windows[instance_counter].title << endl;
 				instance_counter++;

@@ -204,6 +204,9 @@ void resizeWindowCycle(){
 			break;
 		}
 	}
+
+	wcout << "\nResizing: " << windows[winNum].title << endl;
+
 	if (windows[configs.currentWindowMaxed].hWnd != activeWindow) {
 		if (configs.currentWindowMaxed == -1) {
 			//cout << "0" << endl;
@@ -261,6 +264,25 @@ void keyCombo() {
 		resetAll(0);
 		paused = false;
 	}
+	if (configs.keysPressed[0] == VK_RCONTROL && configs.keysPressed[1] == VK_RSHIFT && configs.keysPressed[2] == 'B') {
+		
+
+		if (configs.borders == true) {
+			cout << "Removed Boarders" << endl;
+			for (int x = 0; x < configs.windowCounter; x++) {
+				borderless(windows[x].hWnd, x, 1);
+			}
+			configs.borders = false;
+		}
+		else {
+			cout << "Added Boarders" << endl;
+			for (int x = 0; x < configs.windowCounter; x++) {
+				addBorders(windows[x].hWnd, x, 1);
+			}
+			configs.borders = true;
+		}
+
+	}
 	else if (configs.keysPressed[0] == VK_RETURN && configs.keysPressed[1] == 0 && configs.keysPressed[2] == 0 && active == true) {
 		if (paused == false) {
 			cout << "\nBroadcasting Paused!\n";
@@ -311,9 +333,10 @@ void keyCombo() {
 			paused = false;
 		}
 	}
-	else if (configs.keysPressed[0] == VK_F1 && active == true) {
+	else if (configs.keysPressed[0] == VK_F6 && active == true) {
 		resizeWindowCycle();
 	}
+
 
 	if (paused == false && active == true) {
 		wstring keyCombo;
@@ -641,11 +664,11 @@ void resetAll(int init = 0) {
 
 	//Sleep(100);
 
-	cout << "Remove window borders? y/n" << endl;
+	//cout << "Remove window borders? y/n" << endl;
 	HANDLE hstdin = GetStdHandle(STD_INPUT_HANDLE);
-	FlushConsoleInputBuffer(hstdin);
-	cin >> check;
-
+	//FlushConsoleInputBuffer(hstdin);
+	//cin >> check;
+	/*
 	if (check == 'y') {
 		for (int x = 0; x < configs.windowCounter; x++) {
 			borderless(windows[x].hWnd, x, 1);
@@ -655,7 +678,7 @@ void resetAll(int init = 0) {
 	}
 	else if (check == 'n') 
 		cout << "Borders kept." << endl;
-
+    */
 	cout << "\n-----------------------------------------------------\n";
 	cout << "Broadcasting Started..." << endl;
 	cout << "Press RSHIFT+P at anytime to Pause/Resume broadcasting." << endl;

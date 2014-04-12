@@ -13,6 +13,7 @@ int renameWindows(int configdInstancesNumber, int redo);
 void getWindowInfo(int winNumber);
 void actionMaker(string info);
 int convertStringToAction(string info);
+void addBorders(HWND, int, int);
 
 struct WOWS {
 	wstring title;
@@ -37,6 +38,7 @@ struct CONFIG {
 	int defaultHeight = 0;
 
 	int currentWindowMaxed = -1;
+	bool borders = true;
 
 };
 
