@@ -11,10 +11,50 @@ const int maxWows = 10;
 WOWS windows[maxWows];
 CONFIG configs;
 
+vector<string> Profiles;
 
-int read() {
+void profiles() {
+	string filename = "Configs/Profiles.list";
+	ifstream configFile;
+	string line;
+	wstring convertedLine;
 
-	string fileName = "config.txt";
+	int profileCount = 1;
+
+	int chosenOne = 0;
+
+	configFile.open(filename);
+
+	if (configFile.is_open()) {
+		cout << "Profile List: " << endl;
+		while (getline(configFile, line)) {
+			if (line.find("Default:") != string::npos) {
+			
+			}
+			else {
+				Profiles.push_back(line);
+				Profiles[profileCount-1] = line;
+				cout << "\t" << profileCount << ".) " << line << endl;
+				profileCount++;
+			}
+		}
+		cout << "Select Profile to use: ";
+
+		cin >> chosenOne;
+
+		configs.profile = Profiles[chosenOne - 1];
+
+		cout << "You chose: " << configs.profile << endl;
+
+	}
+	else {
+		cout << "Couldnt open " << filename << endl;
+	}
+}
+
+int readProfile(string profile) {
+
+	string fileName = "Configs/" + profile + ".config";
 	ifstream configFile;
 	string line;
 	wstring convertedLine;
@@ -24,7 +64,6 @@ int read() {
 	//int actions[6] = { '1', '2', '3', '4', '5', '6' };
 	//int screen[6] = { 2, 1, 1, 2, 1, 2 };
 	//configs.hotkey[0] = "CTRL+SHIFT+W";
-
 	configFile.open(fileName);
 
 	if (configFile.is_open()) {

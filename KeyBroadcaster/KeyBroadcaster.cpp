@@ -603,90 +603,93 @@ void resetAll(int init = 0) {
 	cout << "::First WoW renamed will be considered the Master while the others are Slaves::" << endl;
 	cout << "-------------------------------------------------------------------------------" << endl;
 
+	profiles();
 
-	read();
+	readProfile(configs.profile);
 
 	//configs.windowCounter;
 
 	if (configs.windowCounter > 0) {
-
+		running = TRUE;
 	}
 	else {
 		cout << "Couldnt find suitable config file. (Error also fires if no slaves are named.)" << endl;
+		running = FALSE;
 	}
 
-	configs.windowCounter = renameWindows(configs.windowCounter, 0);
-
-	running = true;
-
-	cout << "-------------------------------------------------------------------------------" << endl;
-	wcout << configs.defaultGameWindowTitle << " windows under control: " << endl;
-	for (int x = 0; x != configs.windowCounter; x++) {
-		wcout << windows[x].title << endl;
-	}
-	cout << "-------------------------------------------------------------------------------" << endl;
+	if (running == TRUE) {
+		configs.windowCounter = renameWindows(configs.windowCounter, 0);
 
 
-	RECT info;
-	// enter window size tests here
-	cout << "== Window info before resizing. ==" << endl;
-	for (int x = 0; x < configs.windowCounter; x++) {
-		wcout << " == " << windows[x].title << " == " << endl;
-		GetWindowRect(windows[x].hWnd, &info);
-		//cout << "   Right: " << info.right << " | Left: " << info.left << " | Top: " << info.top << " | Bottom: " << info.bottom << endl;
-		//cout << "   " << info.right - info.left << " = W | " << info.bottom - info.top << " = H" << endl;
-		cout << "\n" << endl;
-		cout << "   (" << info.left << "," << info.top << ")" << "                 " << info.right - info.left << "                 " << "(" << info.right << "," << info.top << ")" << endl;
-		cout << "   +-------------------------------------------+" << endl;
-		cout << "   |                                           |" << endl;
-		cout << "   |                                           |" << endl;
-		cout << "   |                                           |" << endl;
-		cout << "   |                                           |" << " " << info.bottom - info.top << endl;
-		cout << "   |                                           |" << endl;
-		cout << "   |                                           |" << endl;
-		cout << "   |                                           |" << endl;
-		cout << "   +-------------------------------------------+" << endl;
-		cout << "   (" << info.left << "," << info.bottom << ")" << "                                  " << "(" << info.right << "," << info.bottom << ")" << endl;
-		cout << "\n" << endl;
-	}
-	//SetWindowPos(windows[0].hWnd, 0, windows[0].xpos, windows[0].ypos, windows[0].width, windows[0].height, SWP_NOZORDER | SWP_NOACTIVATE);
 
-	//GetWindowRect(windows[1].hWnd, &info);
-	//cout << "Right: " << -info.right << " | Left: " << -info.left << " | Top: " << info.top << " | Bottom: " << info.bottom << endl;
-	//cout << info.right - info.left << " = Window width." << endl;
+		cout << "-------------------------------------------------------------------------------" << endl;
+		wcout << configs.defaultGameWindowTitle << " windows under control: " << endl;
+		for (int x = 0; x != configs.windowCounter; x++) {
+			wcout << windows[x].title << endl;
+		}
+		cout << "-------------------------------------------------------------------------------" << endl;
 
 
-	for (int x = 0; x < configs.windowCounter; x++){
-		SetWindowPos(windows[x].hWnd, 0, windows[x].xpos, windows[x].ypos, windows[x].width, windows[x].height, SWP_NOZORDER | SWP_NOACTIVATE);
-	}
-
-	
-
-	//Sleep(100);
-
-	//cout << "Remove window borders? y/n" << endl;
-	HANDLE hstdin = GetStdHandle(STD_INPUT_HANDLE);
-	//FlushConsoleInputBuffer(hstdin);
-	//cin >> check;
-	/*
-	if (check == 'y') {
+		RECT info;
+		// enter window size tests here
+		cout << "== Window info before resizing. ==" << endl;
 		for (int x = 0; x < configs.windowCounter; x++) {
-			borderless(windows[x].hWnd, x, 1);
+			wcout << " == " << windows[x].title << " == " << endl;
+			GetWindowRect(windows[x].hWnd, &info);
+			//cout << "   Right: " << info.right << " | Left: " << info.left << " | Top: " << info.top << " | Bottom: " << info.bottom << endl;
+			//cout << "   " << info.right - info.left << " = W | " << info.bottom - info.top << " = H" << endl;
+			cout << "\n" << endl;
+			cout << "   (" << info.left << "," << info.top << ")" << "                 " << info.right - info.left << "                 " << "(" << info.right << "," << info.top << ")" << endl;
+			cout << "   +-------------------------------------------+" << endl;
+			cout << "   |                                           |" << endl;
+			cout << "   |                                           |" << endl;
+			cout << "   |                                           |" << endl;
+			cout << "   |                                           |" << " " << info.bottom - info.top << endl;
+			cout << "   |                                           |" << endl;
+			cout << "   |                                           |" << endl;
+			cout << "   |                                           |" << endl;
+			cout << "   +-------------------------------------------+" << endl;
+			cout << "   (" << info.left << "," << info.bottom << ")" << "                                  " << "(" << info.right << "," << info.bottom << ")" << endl;
+			cout << "\n" << endl;
+		}
+		//SetWindowPos(windows[0].hWnd, 0, windows[0].xpos, windows[0].ypos, windows[0].width, windows[0].height, SWP_NOZORDER | SWP_NOACTIVATE);
+
+		//GetWindowRect(windows[1].hWnd, &info);
+		//cout << "Right: " << -info.right << " | Left: " << -info.left << " | Top: " << info.top << " | Bottom: " << info.bottom << endl;
+		//cout << info.right - info.left << " = Window width." << endl;
+
+
+		for (int x = 0; x < configs.windowCounter; x++){
+			SetWindowPos(windows[x].hWnd, 0, windows[x].xpos, windows[x].ypos, windows[x].width, windows[x].height, SWP_NOZORDER | SWP_NOACTIVATE);
+		}
+
+
+
+		//Sleep(100);
+
+		//cout << "Remove window borders? y/n" << endl;
+		HANDLE hstdin = GetStdHandle(STD_INPUT_HANDLE);
+		//FlushConsoleInputBuffer(hstdin);
+		//cin >> check;
+		/*
+		if (check == 'y') {
+		for (int x = 0; x < configs.windowCounter; x++) {
+		borderless(windows[x].hWnd, x, 1);
 		}
 
 		cout << "Borders removed." << endl;
-	}
-	else if (check == 'n') 
+		}
+		else if (check == 'n')
 		cout << "Borders kept." << endl;
-    */
-	cout << "\n-----------------------------------------------------\n";
-	cout << "Broadcasting Started..." << endl;
-	cout << "Press RSHIFT+P at anytime to Pause/Resume broadcasting." << endl;
-	cout << "Press RCTRL+RSHIFT+R at anytime to reload configs." << endl;
-	cout << "Press RCTRL+RSHIFT+B to Add/Remove borders." << endl;
-	cout << "Press F6 to switch between full screen and regular size." << endl;
-	cout << "-------------------------------------------------------\n";
-	SetForegroundWindow(windows[0].hWnd);
-	keyMaker();
-
+		*/
+		cout << "\n-----------------------------------------------------\n";
+		cout << "Broadcasting Started..." << endl;
+		cout << "Press RSHIFT+P at anytime to Pause/Resume broadcasting." << endl;
+		cout << "Press RCTRL+RSHIFT+R at anytime to reload configs." << endl;
+		cout << "Press RCTRL+RSHIFT+B to Add/Remove borders." << endl;
+		cout << "Press F6 to switch between full screen and regular size." << endl;
+		cout << "-------------------------------------------------------\n";
+		SetForegroundWindow(windows[0].hWnd);
+		keyMaker();
+	}
 }

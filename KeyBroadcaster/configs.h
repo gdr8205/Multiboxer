@@ -2,18 +2,22 @@
 #define CONFIGS_H_
 
 #include "stdafx.h"
-
+#include <vector>
 
 
 using namespace std;
 
-int read();
+int readProfile(string profile);
 
 int renameWindows(int configdInstancesNumber, int redo);
 void getWindowInfo(int winNumber);
 void actionMaker(string info);
 int convertStringToAction(string info);
 void addBorders(HWND, int, int);
+
+void profiles();
+
+
 
 struct WOWS {
 	wstring title;
@@ -39,6 +43,8 @@ struct CONFIG {
 
 	int currentWindowMaxed = -1;
 	bool borders = true;
+
+	string profile;
 
 };
 
