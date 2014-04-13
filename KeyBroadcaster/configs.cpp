@@ -13,6 +13,112 @@ CONFIG configs;
 
 vector<string> Profiles;
 
+bool fileExists(string file) {
+	ifstream ifile;
+	ifile.open(file);
+
+	if (ifile.is_open()) {
+		ifile.close();
+		return true;
+	}
+	else {
+		return false;
+	}
+
+}
+
+void appendProfileToList(string profileName) {
+	fstream fs;
+
+	fs.open("Configs/Profiles.list", std::fstream::in | std::fstream::out | std::fstream::app);
+
+	fs << "\n" << profileName;
+
+	fs.close();
+}
+
+bool saveDefaultConfig(string filename) {
+
+	if (!fileExists("Configs/" + filename + ".config")) {
+		
+		ofstream file("Configs/" + filename + ".config");
+		if (file.is_open()) {
+			
+			file << "//////////////////////////////////////////////////////////////////////////////////////////////////////////" << endl
+				<< "// Multiboxer Config File                                                                               //" << endl
+				<< "//------------------------------------------------------------------------------------------------------//" << endl
+				<< "// Usable hotkey buttons and actions:       " << endl
+				<< "//     Control   : LCTRL,  RCTRL,  CTRL       " << endl
+				<< "//     Alt       : LALT,   RALT,   ALT" << endl
+				<< "//     Shift     : LSHIFT, RSHIFT, SHIFT" << endl
+				<< "//     Tab       : TAB" << endl
+				<< "//     Spacebar  : SPACE" << endl
+				<< "//     Arrow keys: UP,     DOWN,   RIGHT,   LEFT" << endl
+				<< "//==============================================" << endl
+				<< "// Only config lines that is allowed spaces are window titles names, even means at the end of each line." << endl
+				<< "// ATM configs 2,3&4 have no impact on the program" << endl
+				<< "//" << endl
+				<< "// Program is set store a maximum of 1000 hotkeys" << endl
+				<< "// All hotkey lines MUST start with $ and have at LEAST 1 \" | \" character (\ key)" << endl
+				<< "// Hotkey format:" << endl
+				<< "//     \"$HOTKEY1 + HOTKEY2 + HOTKEY3 | ACTION1 + ACTION2\"" << endl
+				<< "// Hotkeys will perform thier actions on the screen they are under in this file." << endl
+				<< "//" << endl
+				<< "// MAXIMUM of 5 Windows can be used. Will increase later." << endl
+				<< "// " << endl
+				<< "// Known Bugs:" << endl
+				<< "//     - Storing more than 1000 hotkeys will crash the program." << endl
+				<< "//                " << endl
+				<< "//////////////////////////////////////////////////////////////////////////////////////////////////////////" << endl
+				<< "defaultGameWindowTitle=World of Warcraft" << endl
+				<< "defaultResolution=1680x1050" << endl
+				<< "RELOAD=RCTRL+RSHIFT+R" << endl
+				<< "PAUSE=RSHIFT+P" << endl
+				<< "Master=Tank" << endl
+				<< "width=1466" << endl
+				<< "height=940" << endl
+				<< "xpos=0" << endl
+				<< "ypos=0" << endl
+				<< "Slave=Heals" << endl
+				<< "width=319" << endl
+				<< "height=204" << endl
+				<< "xpos=1359" << endl
+				<< "ypos=77" << endl
+				<< "$W+SPACE|SPACE" << endl
+				<< "$SPACE|SPACE" << endl
+				<< "$DOWN|DOWN" << endl
+				<< "$S|S" << endl
+				<< "$1|1" << endl
+				<< "$2|2" << endl
+				<< "$3|3" << endl
+				<< "$4|4" << endl
+				<< "$5|5" << endl
+				<< "$6|6" << endl
+				<< "$7|7" << endl
+				<< "$8|8" << endl
+				<< "$9|9" << endl
+				<< "$0|0" << endl
+				<< "$-|-" << endl
+				<< "$=|=" << endl
+				<< "$ALT|ALT";
+
+			file.close();
+			
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+	}
+	else {
+		return false;
+	}
+
+}
+
+
+
 void profiles() {
 	string filename = "Configs/Profiles.list";
 	ifstream configFile;
@@ -32,10 +138,15 @@ void profiles() {
 			
 			}
 			else {
-				Profiles.push_back(line);
-				Profiles[profileCount-1] = line;
-				cout << "\t" << profileCount << ".) " << line << endl;
-				profileCount++;
+				if (fileExists("Configs/" + line + ".config")) {
+					Profiles.push_back(line);
+					Profiles[profileCount - 1] = line;
+					cout << "\t" << profileCount << ".) " << line << endl;
+					profileCount++;
+				}
+				else {
+					cout << "\t    " << line << " (No config file found.)" << endl;
+				}
 			}
 		}
 		cout << "Select Profile to use: ";

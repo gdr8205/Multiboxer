@@ -17,6 +17,9 @@ void addBorders(HWND, int, int);
 
 void profiles();
 
+bool saveDefaultConfig(string filename);
+void appendProfileToList(string profileName);
+
 struct WOWS {
 	wstring title;
 	HWND hWnd;

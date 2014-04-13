@@ -264,7 +264,49 @@ void keyCombo() {
 		resetAll(0);
 		paused = false;
 	}
-	if (configs.keysPressed[0] == VK_RCONTROL && configs.keysPressed[1] == VK_RSHIFT && configs.keysPressed[2] == 'B') {
+	else if (configs.keysPressed[0] == VK_RCONTROL && configs.keysPressed[1] == VK_RSHIFT && configs.keysPressed[2] == 'P') {
+		
+		int selection = 0;
+		string profileName;
+
+		paused = true;
+		cout << "\nProfile Manager:" << endl
+			<< "=================" << endl
+			<< "1.) Add Profile" << endl
+			<< "Select an option: ";
+
+		HANDLE hstdin = GetStdHandle(STD_INPUT_HANDLE);
+		FlushConsoleInputBuffer(hstdin);
+
+		cin >> selection;
+
+		if (selection == 1) {
+			cout << "Enter new Profile name: ";
+			
+			
+			FlushConsoleInputBuffer(hstdin);
+			
+			cin >> profileName;
+
+			if (saveDefaultConfig(profileName)) {
+				
+				appendProfileToList(profileName);
+
+				cout << "New Profile " << profileName << " has been added!" << endl;
+			}
+			else {
+				cout << "Could not create profile " << profileName << ".  Does the profile config already exist?" << endl;
+			}
+		}
+		else {
+			cout << "Sorry unknown option selected." << endl;
+		}
+
+		cout << "Resuming broadcasts." << endl;
+
+		paused = false;
+	}
+	else if (configs.keysPressed[0] == VK_RCONTROL && configs.keysPressed[1] == VK_RSHIFT && configs.keysPressed[2] == 'B') {
 		
 
 		if (configs.borders == true) {
