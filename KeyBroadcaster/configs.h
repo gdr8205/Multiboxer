@@ -3,9 +3,10 @@
 
 #include "stdafx.h"
 #include <vector>
-
+#include <fstream>
 
 using namespace std;
+
 
 int readProfile(string profile);
 
@@ -19,6 +20,7 @@ void profiles();
 
 bool saveDefaultConfig(string filename);
 void appendProfileToList(string profileName);
+bool deleteProfile(int lineNum);
 
 struct WOWS {
 	wstring title;
@@ -28,6 +30,7 @@ struct WOWS {
 	int xpos;
 	int ypos;
 	RECT oldRect;
+	RECT windowPlacement;
 };
 
 struct CONFIG {

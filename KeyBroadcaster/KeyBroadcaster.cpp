@@ -265,15 +265,19 @@ void keyCombo() {
 		paused = false;
 	}
 	else if (configs.keysPressed[0] == VK_RCONTROL && configs.keysPressed[1] == VK_RSHIFT && configs.keysPressed[2] == 'P') {
-		
+		configs.keysPressed[0] = NULL;
+		configs.keysPressed[1] = NULL;
+		configs.keysPressed[2] = NULL;
+
 		int selection = 0;
 		string profileName;
 
-		paused = true;
+		//paused = true;
 		cout << "\nProfile Manager:" << endl
 			<< "=================" << endl
 			<< "1.) Add Profile" << endl
-			<< "Select an option: ";
+			<< "2.) Delete Profile" << endl
+			<< "\nSelect an option: ";
 
 		HANDLE hstdin = GetStdHandle(STD_INPUT_HANDLE);
 		FlushConsoleInputBuffer(hstdin);
@@ -298,13 +302,50 @@ void keyCombo() {
 				cout << "Could not create profile " << profileName << ".  Does the profile config already exist?" << endl;
 			}
 		}
+
+		else if (selection == 2) {
+			string filename = "Configs/Profiles.list";
+			ifstream configFile;
+			string line;
+			int profCounter = 1;
+
+			selection = 0;
+
+			configFile.open(filename);
+
+			if (configFile.is_open()) {
+				while (getline(configFile, line)) {
+					if (line.find("Default:") != string::npos) {
+
+					}
+					else {
+						cout << "\t" << profCounter << ".) " << line << endl;
+						profCounter++;
+					}
+				}
+			}
+			cout << "Select profile number to delete: ";
+			FlushConsoleInputBuffer(hstdin);
+			cin >> selection;
+
+			if (deleteProfile(selection)) {
+				cout << "\nProfile has been deleted!" << endl;
+			}
+			else {
+				cout << "Error deleteing profile..." << endl;
+			}
+		}
+
 		else {
 			cout << "Sorry unknown option selected." << endl;
 		}
 
 		cout << "Resuming broadcasts." << endl;
+		
+		
 
-		paused = false;
+		//paused = false;
+		//active = true;
 	}
 	else if (configs.keysPressed[0] == VK_RCONTROL && configs.keysPressed[1] == VK_RSHIFT && configs.keysPressed[2] == 'B') {
 		
@@ -608,9 +649,10 @@ void borderless(HWND hWnd, int winNum,int move) {
 			SetWindowPos(hWnd, 0, windows[winNum].xpos, windows[winNum].ypos, windows[winNum].width, resizeWindow(configs.defaultWidth, configs.defaultHeight, windows[winNum].width), /*SWP_NOZORDER | SWP_NOACTIVATE*/ 0);
 			ShowWindow(hWnd, SW_RESTORE);
 		}
-		else
-			SetWindowPos(hWnd, 0, windows[winNum].xpos, windows[winNum].ypos, windows[winNum].width, resizeWindow(configs.defaultWidth, configs.defaultHeight, windows[winNum].width), /*SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE*/ 0);
-		//1680x1050
+		else if (move == 2) {
+			SetWindowPos(hWnd, 0, windows[winNum].xpos, windows[winNum].ypos, windows[winNum].width, resizeWindow(configs.defaultWidth, configs.defaultHeight, windows[winNum].width), /*SWP_NOZORDER | SWP_NOACTIVATE*/ 0);
+			ShowWindow(hWnd, SW_RESTORE);
+		}
 	}
 	else {
 		wcout << "Couldn't find window: xyz." << endl;

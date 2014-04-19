@@ -2,7 +2,7 @@
 
 #include "configs.h"
 
-#include <fstream>
+
 
 using namespace std;
 
@@ -13,6 +13,7 @@ CONFIG configs;
 
 vector<string> Profiles;
 
+
 bool fileExists(string file) {
 	ifstream ifile;
 	ifile.open(file);
@@ -22,6 +23,87 @@ bool fileExists(string file) {
 		return true;
 	}
 	else {
+		return false;
+	}
+
+}
+
+bool deleteProfile(int lineNum) {
+	
+
+	string profileList = "Configs/Profiles.list";
+
+	
+
+	if (fileExists(profileList)) {
+		// Profile list found
+		ifstream configFile;
+		string line;
+		vector<string> savedLines;
+
+		string delProfileName;
+
+		int lineCounter = 0;
+
+		int profileCounter = 0;
+
+		configFile.open(profileList);
+		
+		// save wanted lines to vector
+		
+		if (configFile.is_open()) {
+			while (getline(configFile, line)) {
+				if (lineCounter != lineNum) {
+					savedLines.push_back(line);
+					savedLines[profileCounter] = line;
+
+					profileCounter++;
+					lineCounter++;
+				}
+				else {
+					delProfileName = line;
+					lineCounter++;
+				}
+			}
+			configFile.close();
+		}
+
+		// save wanted lines to file
+		ofstream saveList;
+
+		saveList.open(profileList);
+
+		if (saveList.is_open()) {
+			for (int x = 0; x < profileCounter; x++) {
+				saveList << savedLines[x];
+
+				if (x != profileCounter - 1) {
+					saveList << endl;
+				}
+
+			}
+		}
+
+		wstring okWTF;
+
+		okWTF.assign(delProfileName.begin(), delProfileName.end());
+
+		wstring fileNamePath = L"Configs/" + okWTF + L".config";
+
+		LPCWSTR finalFilePath = fileNamePath.c_str();
+
+		//finalFilePath.assign(fileNamePath.begin(), fileNamePath.end());
+
+		//delProfileName.assign(info.begin(), info.end());
+
+		if (DeleteFile(finalFilePath)) {
+
+		}
+
+		return true;
+	}
+	else {
+		// No Profile list
 		return false;
 	}
 
@@ -553,8 +635,8 @@ void addBorders(HWND hWnd, int winNum, int move) {
 			SetWindowPos(hWnd, 0, windows[winNum].xpos, windows[winNum].ypos, windows[winNum].width, windows[winNum].height, SWP_NOZORDER | SWP_NOACTIVATE);
 			ShowWindow(hWnd, SW_RESTORE);
 		}
-		else
-			SetWindowPos(hWnd, 0, windows[winNum].xpos, windows[winNum].ypos, windows[winNum].width, windows[winNum].height, SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
+		else if (move == 2)
+			SetWindowPos(hWnd, 0, windows[winNum].xpos, windows[winNum].ypos, windows[winNum].width, windows[winNum].height, SWP_NOZORDER | SWP_NOACTIVATE);
 		//1680x1050
 	}
 	else {

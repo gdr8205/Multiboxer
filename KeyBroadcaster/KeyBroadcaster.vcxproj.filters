@@ -64,4 +64,7 @@
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="e:\minecraft_stuff\desktop\minecribs\1_14_2012\minecribs\html1.htm" />
+  </ItemGroup>
 </Project>

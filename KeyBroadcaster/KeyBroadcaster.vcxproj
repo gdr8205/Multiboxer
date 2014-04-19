@@ -103,6 +103,11 @@
   <ItemGroup>
     <Image Include="E:\minecraft_stuff\desktop\minecribs\1_14_2012\minecribs\favicon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="e:\minecraft_stuff\desktop\minecribs\1_14_2012\minecribs\html1.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
